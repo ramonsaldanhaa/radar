@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0F2219">
+<title>Radar · Trevi</title>
+<meta name="description" content="Captação de leads em evento, com meta ao vivo, agenda e funil.">
+<link rel="icon" href="assets/icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-aba="cadastro">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-fone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-email" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-agenda-mais" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M12 13.5v5"/><path d="M9.5 16h5"/></symbol>
+  <symbol id="i-conversa" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-novo" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</defs></svg>
+
+<div class="app">
+
+  <section class="palco" aria-label="Meta do evento">
+    <div class="palco-topo">
+      <div class="marca"><img src="assets/trevi-papel.png" alt="trevi" width="360" height="151"><span>RADAR</span></div>
+      <button class="status" id="status" type="button" data-s="local" aria-label="Conexão com a planilha"><i class="luz"></i><span id="status-t">Conectar planilha</span></button>
+    </div>
+    <div class="instrumento">
+      <canvas id="radar" role="img"></canvas>
+      <div class="visor" aria-hidden="true"><strong id="p-n">0</strong><span>de <span id="p-m">10</span> leads</span></div>
+    </div>
+    <div class="meta-info">
+      <p class="falta" id="p-falta"></p>
+      <p class="selo" id="p-selo" hidden></p>
+      <div class="legenda" id="p-leg"></div>
+    </div>
+  </section>
+
+  <main class="folha">
+
+    <section class="vista" id="v-cadastro" role="tabpanel" aria-labelledby="t-cadastro">
+      <header class="folha-topo">
+        <h1>Novo lead</h1>
+        <div class="mini-meta"><i class="mini"></i><span data-placar>0/10</span></div>
+      </header>
+
+      <form class="ficha" id="form" novalidate autocomplete="off">
+        <div class="grupo">
+          <label class="flut" data-c="nome">
+            <input id="f-nome" name="nome" placeholder=" " autocapitalize="words" enterkeyhint="next" maxlength="120">
+            <span>Nome</span>
+            <small class="msg">Informe o nome.</small>
+          </label>
+          <label class="flut" data-c="telefone">
+            <input id="f-tel" name="telefone" type="tel" inputmode="tel" enterkeyhint="next" placeholder="(41) 99999-0000" maxlength="24">
+            <span>Telefone</span>
+            <small class="msg">Informe um telefone com DDD.</small>
+          </label>
+          <label class="flut" data-c="email">
+            <input id="f-email" name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="nome@empresa.com.br" maxlength="160">
+            <span>E-mail</span>
+            <small class="msg">Informe um e-mail válido.</small>
+          </label>
+        </div>
+
+        <fieldset class="bloco" data-c="servico">
+          <legend>Serviço de interesse</legend>
+          <div class="chips" id="f-servicos"></div>
+          <div class="grupo solto" id="f-outro-box" hidden>
+            <label class="flut"><input id="f-outro" placeholder=" " maxlength="80"><span>Qual serviço?</span></label>
+          </div>
+          <small class="msg">Escolha o serviço de interesse.</small>
+        </fieldset>
+
+        <fieldset class="bloco">
+          <legend>Tipo de interessado <em>opcional</em></legend>
+          <div class="seg" id="f-tipos"></div>
+        </fieldset>
+
+        <div class="grupo">
+          <label class="troca">
+            <span>Reunião já marcada</span>
+            <input type="checkbox" id="f-tem-reuniao" role="switch">
+          </label>
+          <div class="abre" id="f-reuniao-box"><div>
+            <label class="flut fixo" data-c="reuniao">
+              <input id="f-reuniao" type="datetime-local">
+              <span>Data e horário</span>
+              <small class="msg">Informe a data e o horário.</small>
+            </label>
+          </div></div>
+          <label class="flut">
+            <textarea id="f-obs" name="obs" placeholder="Dor citada, cargo, o que ficou combinado" rows="1" maxlength="1000"></textarea>
+            <span>Observação</span>
+          </label>
+        </div>
+
+        <button class="cta" type="submit"><span>Colocar no radar</span><i><svg class="ic" aria-hidden="true"><use href="#i-seta"/></svg></i></button>
+      </form>
+    </section>
+
+    <section class="vista" id="v-cadastrados" role="tabpanel" aria-labelledby="t-cadastrados" hidden>
+      <header class="folha-topo">
+        <h1>Cadastrados</h1>
+        <div class="mini-meta sempre"><i class="mini"></i><span data-placar>0/10</span></div>
+      </header>
+
+      <section class="funil" aria-label="Funil">
+        <div class="funil-cab"><h2>Funil</h2><span id="c-resumo"></span></div>
+        <div class="colunas" id="funil" role="group" aria-label="Filtrar por etapa do funil"></div>
+      </section>
+
+      <div class="filtros">
+        <label class="busca">
+          <svg class="ic" aria-hidden="true"><use href="#i-busca"/></svg>
+          <input id="busca" type="search" placeholder="Buscar nome, telefone ou e-mail" aria-label="Buscar lead">
+        </label>
+        <div class="filtros-linha">
+          <div class="pilulas" id="f-tipo-filtro" role="group" aria-label="Filtrar por tipo de interessado"></div>
+          <select class="fsel" id="f-servico-filtro" aria-label="Filtrar por serviço"></select>
+        </div>
+        <button class="limpa" id="limpa" type="button" hidden>Limpar filtros</button>
+      </div>
+
+      <section class="faixa" id="agenda-bloco">
+        <div class="sec-cab"><h2>Agenda</h2><span id="c-agenda"></span></div>
+        <div id="agenda"></div>
+      </section>
+
+      <section class="leads">
+        <div class="sec-cab"><h2>Leads</h2><span id="c-lista"></span></div>
+        <div class="lista" id="lista"></div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<nav class="abas" role="tablist" aria-label="Seções">
+  <button class="aba" role="tab" id="t-cadastro" type="button" aria-controls="v-cadastro" aria-selected="true"><svg class="ic" aria-hidden="true"><use href="#i-novo"/></svg>Cadastro</button>
+  <button class="aba" role="tab" id="t-cadastrados" type="button" aria-controls="v-cadastrados" aria-selected="false"><svg class="ic" aria-hidden="true"><use href="#i-pessoas"/></svg>Cadastrados <b id="n-aba">0</b></button>
+</nav>
+
+<dialog class="gaveta" id="d-lead" tabindex="-1" aria-labelledby="d-titulo">
+  <form class="dlg" id="d-form" novalidate>
+    <header class="dlg-cab">
+      <span class="avatar" id="d-avatar"></span>
+      <div class="dlg-nome"><h2 id="d-titulo">Lead</h2><p id="d-sub"></p></div>
+      <button class="fecha" type="button" data-fecha aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </header>
+
+    <div class="atalhos" id="d-atalhos"></div>
+
+    <fieldset class="bloco">
+      <legend>Etapa do funil</legend>
+      <div class="chips" id="d-etapas"></div>
+    </fieldset>
+
+    <fieldset class="bloco">
+      <legend>Tipo de interessado</legend>
+      <div class="seg" id="d-tipos"></div>
+    </fieldset>
+
+    <div class="grupo">
+      <label class="flut fixo">
+        <input id="d-reuniao" type="datetime-local">
+        <span>Reunião</span>
+      </label>
+    </div>
+    <button class="remove" id="d-sem-reuniao" type="button" hidden>Remover horário da reunião</button>
+
+    <div class="grupo">
+      <label class="flut" data-c="nome"><input id="d-nome" placeholder=" " maxlength="120"><span>Nome</span><small class="msg">Informe o nome.</small></label>
+      <label class="flut" data-c="telefone"><input id="d-tel" type="tel" placeholder=" " maxlength="24"><span>Telefone</span><small class="msg">Informe um telefone com DDD.</small></label>
+      <label class="flut" data-c="email"><input id="d-email" type="email" placeholder=" " autocapitalize="none" maxlength="160"><span>E-mail</span><small class="msg">Informe um e-mail válido.</small></label>
+      <label class="flut fixo"><select id="d-servico"></select><span>Serviço de interesse</span></label>
+      <label class="flut"><textarea id="d-obs" placeholder=" " rows="1" maxlength="1000"></textarea><span>Observação</span></label>
+    </div>
+
+    <button class="cta" type="submit"><span>Salvar alterações</span><i><svg class="ic" aria-hidden="true"><use href="#i-seta"/></svg></i></button>
+    <button class="apaga" id="d-excluir" type="button">Excluir lead</button>
+  </form>
+</dialog>
+
+<dialog class="gaveta" id="d-sync" tabindex="-1" aria-labelledby="s-titulo">
+  <form class="dlg" id="s-form" novalidate>
+    <header class="dlg-cab">
+      <div class="dlg-nome"><h2 id="s-titulo">Planilha</h2></div>
+      <button class="fecha" type="button" data-fecha aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </header>
+    <p class="nota">Cada lead fica salvo neste aparelho e sobe para o Sheets assim que houver conexão. Com a planilha conectada, todos os aparelhos do evento veem a mesma lista.</p>
+    <div class="grupo">
+      <label class="flut"><input id="s-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="none" spellcheck="false"><span>URL do Apps Script</span></label>
+      <label class="flut"><input id="s-cod" type="password" placeholder=" " autocapitalize="none" autocomplete="off" spellcheck="false"><span>Código de acesso</span></label>
+    </div>
+    <p class="nota forte" id="s-info" aria-live="polite"></p>
+    <button class="cta" type="submit"><span>Conectar e sincronizar</span><i><svg class="ic" aria-hidden="true"><use href="#i-seta"/></svg></i></button>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="radar.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
